@@ -88,8 +88,8 @@ public class AnalogClock extends View {
     }
 
     private void drawHourHand(Canvas canvas) {
-        // FIXME: We must take the minutes into account when placing the hours hand
-        double radians = (2 * Math.PI) * (hour / 12.0);
+        double decimalHours = hour + (minute / 60.0);
+        double radians = (2 * Math.PI) * (decimalHours / 12.0);
         float radius = canvas.getWidth() * HOUR_HAND_LENGTH_PERCENT / 100f;
         float x1 = canvas.getWidth() / 2 + (float)(radius * Math.sin(radians));
         float y1 = canvas.getWidth() / 2 - (float)(radius * Math.cos(radians));
