@@ -28,6 +28,17 @@ public class AnalogClock extends View {
     private static final float HOUR_FONT_SIZE_PERCENT = 7;
     private final Paint hourNumberPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
+    private static final float HOUR_HAND_LENGTH_PERCENT = 20;
+    private static final float HOUR_HAND_WIDTH_PERCENT = 4;
+    private final Paint hourHandPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+    private static final float MINUTE_HAND_LENGTH_PERCENT = 26;
+    private static final float MINUTE_HAND_WIDTH_PERCENT = 3;
+    private final Paint minuteHandPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+    private int hour = 2;
+    private int minute = 32;
+
     public AnalogClock(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
@@ -49,6 +60,14 @@ public class AnalogClock extends View {
         hourNumberPaint.setColor(Color.BLACK);
         hourNumberPaint.setStyle(Paint.Style.STROKE);
         hourNumberPaint.setTextSize(w * HOUR_FONT_SIZE_PERCENT / 100f);
+
+        hourHandPaint.setColor(Color.BLACK);
+        hourHandPaint.setStrokeCap(Paint.Cap.ROUND);
+        hourHandPaint.setStrokeWidth(w * HOUR_HAND_WIDTH_PERCENT / 100f);
+
+        minuteHandPaint.setColor(Color.BLACK);
+        minuteHandPaint.setStrokeCap(Paint.Cap.ROUND);
+        minuteHandPaint.setStrokeWidth(w * MINUTE_HAND_WIDTH_PERCENT / 100f);
     }
 
     @Override
@@ -64,11 +83,35 @@ public class AnalogClock extends View {
         drawMinuteTicks(canvas);
         drawHourTicks(canvas);
         drawHourNumbers(canvas);
-        drawHands(canvas);
+        drawHourHand(canvas);
+        drawMinuteHand(canvas);
     }
 
-    private void drawHands(Canvas canvas) {
+    private void drawHourHand(Canvas canvas) {
+        // FIXME: We must take the minutes into account when placing the hours hand
+        double radians = (2 * Math.PI) * (hour / 12.0);
+        float radius = canvas.getWidth() * HOUR_HAND_LENGTH_PERCENT / 100f;
+        float x1 = canvas.getWidth() / 2 + (float)(radius * Math.sin(radians));
+        float y1 = canvas.getWidth() / 2 - (float)(radius * Math.cos(radians));
+        canvas.drawLine(
+                canvas.getWidth() / 2f,
+                canvas.getWidth() / 2f,
+                x1,
+                y1,
+                hourHandPaint);
+    }
 
+    private void drawMinuteHand(Canvas canvas) {
+        double radians = (2 * Math.PI) * (minute / 60.0);
+        float radius = canvas.getWidth() * MINUTE_HAND_LENGTH_PERCENT / 100f;
+        float x1 = canvas.getWidth() / 2 + (float)(radius * Math.sin(radians));
+        float y1 = canvas.getWidth() / 2 - (float)(radius * Math.cos(radians));
+        canvas.drawLine(
+                canvas.getWidth() / 2f,
+                canvas.getWidth() / 2f,
+                x1,
+                y1,
+                minuteHandPaint);
     }
 
     private void drawHourNumbers(Canvas canvas) {
