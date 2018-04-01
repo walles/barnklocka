@@ -9,6 +9,8 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
+import java.util.Calendar;
+
 public class AnalogClock extends View {
     private static final float CLOCK_RADIUS_PERCENT = 40;
     private static final float BORDER_WIDTH_PERCENT = 3;
@@ -36,11 +38,14 @@ public class AnalogClock extends View {
     private static final float MINUTE_HAND_WIDTH_PERCENT = 3;
     private final Paint minuteHandPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-    private int hour = 2;
-    private int minute = 32;
+    private int hour;
+    private int minute;
 
     public AnalogClock(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+
+        hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        minute = Calendar.getInstance().get(Calendar.MINUTE);
     }
 
     @Override
@@ -83,8 +88,8 @@ public class AnalogClock extends View {
         drawMinuteTicks(canvas);
         drawHourTicks(canvas);
         drawHourNumbers(canvas);
-        drawHourHand(canvas);
         drawMinuteHand(canvas);
+        drawHourHand(canvas);
     }
 
     private void drawHourHand(Canvas canvas) {
