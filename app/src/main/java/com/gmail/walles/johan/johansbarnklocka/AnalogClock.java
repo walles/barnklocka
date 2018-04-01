@@ -11,40 +11,34 @@ import android.view.View;
 public class AnalogClock extends View {
     private static final float CLOCK_RADIUS_PERCENT = 40;
     private static final float BORDER_WIDTH_PERCENT = 3;
-    private final Paint borderPaint;
+    private final Paint borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     private static final float MINUTE_TICK_RADIUS_PERCENT = 36;
     private static final float MINUTE_TICK_LENGTH_PERCENT = 4;
     private static final float MINUTE_TICK_WIDTH_PERCENT = .5f;
-    private final Paint minuteTickPaint;
+    private final Paint minuteTickPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     private static final float HOUR_TICK_RADIUS_PERCENT = 36;
     private static final float HOUR_TICK_LENGTH_PERCENT = 4;
     private static final float HOUR_TICK_WIDTH_PERCENT = 1.5f;
-    private final Paint hourTickPaint;
+    private final Paint hourTickPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     public AnalogClock(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-
-        // Stroke widths are set in onSizeChanged()
-
-        borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        borderPaint.setColor(Color.BLACK);
-        borderPaint.setStyle(Paint.Style.STROKE);
-
-        minuteTickPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        minuteTickPaint.setColor(Color.BLACK);
-        minuteTickPaint.setStyle(Paint.Style.STROKE);
-
-        hourTickPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        hourTickPaint.setColor(Color.BLACK);
-        hourTickPaint.setStyle(Paint.Style.STROKE);
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        borderPaint.setColor(Color.BLACK);
+        borderPaint.setStyle(Paint.Style.STROKE);
         borderPaint.setStrokeWidth(w * BORDER_WIDTH_PERCENT / 100f);
+
+        minuteTickPaint.setColor(Color.BLACK);
+        minuteTickPaint.setStyle(Paint.Style.STROKE);
         minuteTickPaint.setStrokeWidth(w * MINUTE_TICK_WIDTH_PERCENT / 100f);
+
+        hourTickPaint.setColor(Color.BLACK);
+        hourTickPaint.setStyle(Paint.Style.STROKE);
         hourTickPaint.setStrokeWidth(w * HOUR_TICK_WIDTH_PERCENT / 100f);
     }
 
