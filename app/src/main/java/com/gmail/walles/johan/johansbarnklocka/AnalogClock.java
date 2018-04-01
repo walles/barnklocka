@@ -1,43 +1,41 @@
 package com.gmail.walles.johan.johansbarnklocka;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.View;
 
 public class AnalogClock extends View {
     private static final float CLOCK_RADIUS_PERCENT = 40;
-    private static final double BORDER_WIDTH_MM = 3;
+    private static final float BORDER_WIDTH_PERCENT = 3;
     private final Paint borderPaint;
 
-    private static final float TICK_RADIUS_PERCENT = 33;
+    private static final float TICK_RADIUS_PERCENT = 36;
     private static final float TICK_LENGTH_PERCENT = 4;
-    private static final float TICK_WIDTH_MM = 0.5f;
+    private static final float TICK_WIDTH_PERCENT = .5f;
     private final Paint minuteTickPaint;
 
     public AnalogClock(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
+        // Stroke widths are set in onSizeChanged()
+
         borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         borderPaint.setColor(Color.BLACK);
-        borderPaint.setStrokeWidth(mmToPx(BORDER_WIDTH_MM));
         borderPaint.setStyle(Paint.Style.STROKE);
 
         minuteTickPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         minuteTickPaint.setColor(Color.BLACK);
-        minuteTickPaint.setStrokeWidth(mmToPx(TICK_WIDTH_MM));
         minuteTickPaint.setStyle(Paint.Style.STROKE);
     }
 
-    private float mmToPx(double mm) {
-        DisplayMetrics displayMetrics = Resources.getSystem().getDisplayMetrics();
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_MM, (float)mm, displayMetrics);
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        borderPaint.setStrokeWidth(w * BORDER_WIDTH_PERCENT / 100f);
+        minuteTickPaint.setStrokeWidth(w * TICK_WIDTH_PERCENT / 100f);
     }
 
     @Override
