@@ -7,11 +7,13 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.Calendar;
 
-public class AnalogClock extends View {
+public class AnalogClock extends View implements GestureDetector.OnGestureListener {
     private static final float CLOCK_RADIUS_PERCENT = 40;
     private static final float BORDER_WIDTH_PERCENT = 3;
     private final Paint borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -38,6 +40,16 @@ public class AnalogClock extends View {
     private static final float MINUTE_HAND_WIDTH_PERCENT = 3;
     private final Hand minuteHand;
 
+    private final GestureDetector gestureDetector;
+    private static final int SLOP_PERCENT = 4;
+    private int slopPixels;
+
+    /**
+     * Which hand are we currently moving?
+     */
+    @Nullable
+    private Hand movingHand;
+
     public AnalogClock(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
@@ -55,6 +67,8 @@ public class AnalogClock extends View {
         minuteHandPaint.setStrokeCap(Paint.Cap.ROUND);
         minuteHand = new MinuteHand(minuteHandPaint, MINUTE_HAND_WIDTH_PERCENT, MINUTE_HAND_LENGTH_PERCENT);
         minuteHand.setTime(hour, minute);
+
+        gestureDetector = new GestureDetector(context, this);
     }
 
     @Override
@@ -74,6 +88,8 @@ public class AnalogClock extends View {
         hourNumberPaint.setColor(Color.BLACK);
         hourNumberPaint.setStyle(Paint.Style.STROKE);
         hourNumberPaint.setTextSize(w * HOUR_FONT_SIZE_PERCENT / 100f);
+
+        slopPixels = (w * SLOP_PERCENT) / 100;
     }
 
     @Override
@@ -91,6 +107,11 @@ public class AnalogClock extends View {
         drawHourNumbers(canvas);
         minuteHand.draw(canvas);
         hourHand.draw(canvas);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return gestureDetector.onTouchEvent(event) || super.onTouchEvent(event);
     }
 
     private void drawHourNumbers(Canvas canvas) {
@@ -154,5 +175,62 @@ public class AnalogClock extends View {
                 canvas.getWidth() / 2,
                 canvas.getWidth() * CLOCK_RADIUS_PERCENT / 100f,
                 borderPaint);
+    }
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return true;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        if (e1 == e2) {
+            // This is a start event
+            return onScrollStart(e1);
+        }
+
+        return false;
+    }
+
+    private boolean onScrollStart(MotionEvent e1) {
+        assert movingHand == null;
+
+        double dMinute = minuteHand.getDistanceTo(e1.getX(), e1.getY());
+        double dHour = hourHand.getDistanceTo(e1.getX(), e1.getY());
+        Hand hand;
+        double distance;
+        if (dMinute < dHour) {
+            hand = minuteHand;
+            distance = dMinute;
+        } else {
+            hand = hourHand;
+            distance = dHour;
+        }
+
+        if (distance < slopPixels) {
+            movingHand = hand;
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        return false;
     }
 }

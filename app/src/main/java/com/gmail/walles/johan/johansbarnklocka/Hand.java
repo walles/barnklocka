@@ -11,6 +11,9 @@ public abstract class Hand {
     private final float lengthPercent;
     private final float widthPercent;
 
+    private float handEndX;
+    private float handEndY;
+
     protected Hand(Paint paint, float widthPercent, float lengthPercent) {
         this.paint = paint;
         this.widthPercent = widthPercent;
@@ -20,15 +23,15 @@ public abstract class Hand {
     public void draw(Canvas canvas) {
         double radians = getRadians();
         float radius = canvas.getWidth() * lengthPercent / 100f;
-        float x1 = canvas.getWidth() / 2 + (float)(radius * Math.sin(radians));
-        float y1 = canvas.getWidth() / 2 - (float)(radius * Math.cos(radians));
+        handEndX = canvas.getWidth() / 2 + (float)(radius * Math.sin(radians));
+        handEndY = canvas.getWidth() / 2 - (float)(radius * Math.cos(radians));
 
         paint.setStrokeWidth(canvas.getWidth() * widthPercent / 100f);
         canvas.drawLine(
                 canvas.getWidth() / 2f,
                 canvas.getWidth() / 2f,
-                x1,
-                y1,
+                handEndX,
+                handEndY,
                 paint);
     }
 
@@ -38,4 +41,11 @@ public abstract class Hand {
     }
 
     protected abstract double getRadians();
+
+    public double getDistanceTo(float x, float y) {
+        double dx = x - handEndX;
+        double dy = y - handEndY;
+
+        return Math.sqrt(dx * dx + dy * dy);
+    }
 }
