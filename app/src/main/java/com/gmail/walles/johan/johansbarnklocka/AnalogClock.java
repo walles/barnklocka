@@ -32,20 +32,29 @@ public class AnalogClock extends View {
 
     private static final float HOUR_HAND_LENGTH_PERCENT = 20;
     private static final float HOUR_HAND_WIDTH_PERCENT = 4;
-    private final Paint hourHandPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Hand hourHand;
 
     private static final float MINUTE_HAND_LENGTH_PERCENT = 26;
     private static final float MINUTE_HAND_WIDTH_PERCENT = 3;
-    private final Paint minuteHandPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-
-    private int hour;
-    private int minute;
+    private final Hand minuteHand;
 
     public AnalogClock(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
-        hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-        minute = Calendar.getInstance().get(Calendar.MINUTE);
+        int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        int minute = Calendar.getInstance().get(Calendar.MINUTE);
+
+        Paint hourHandPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        hourHandPaint.setColor(Color.BLACK);
+        hourHandPaint.setStrokeCap(Paint.Cap.ROUND);
+        hourHand = new HourHand(hourHandPaint, HOUR_HAND_WIDTH_PERCENT, HOUR_HAND_LENGTH_PERCENT);
+        hourHand.setTime(hour, minute);
+
+        Paint minuteHandPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        minuteHandPaint.setColor(Color.BLACK);
+        minuteHandPaint.setStrokeCap(Paint.Cap.ROUND);
+        minuteHand = new MinuteHand(minuteHandPaint, MINUTE_HAND_WIDTH_PERCENT, MINUTE_HAND_LENGTH_PERCENT);
+        minuteHand.setTime(hour, minute);
     }
 
     @Override
@@ -65,14 +74,6 @@ public class AnalogClock extends View {
         hourNumberPaint.setColor(Color.BLACK);
         hourNumberPaint.setStyle(Paint.Style.STROKE);
         hourNumberPaint.setTextSize(w * HOUR_FONT_SIZE_PERCENT / 100f);
-
-        hourHandPaint.setColor(Color.BLACK);
-        hourHandPaint.setStrokeCap(Paint.Cap.ROUND);
-        hourHandPaint.setStrokeWidth(w * HOUR_HAND_WIDTH_PERCENT / 100f);
-
-        minuteHandPaint.setColor(Color.BLACK);
-        minuteHandPaint.setStrokeCap(Paint.Cap.ROUND);
-        minuteHandPaint.setStrokeWidth(w * MINUTE_HAND_WIDTH_PERCENT / 100f);
     }
 
     @Override
@@ -88,35 +89,8 @@ public class AnalogClock extends View {
         drawMinuteTicks(canvas);
         drawHourTicks(canvas);
         drawHourNumbers(canvas);
-        drawMinuteHand(canvas);
-        drawHourHand(canvas);
-    }
-
-    private void drawHourHand(Canvas canvas) {
-        double decimalHours = hour + (minute / 60.0);
-        double radians = (2 * Math.PI) * (decimalHours / 12.0);
-        float radius = canvas.getWidth() * HOUR_HAND_LENGTH_PERCENT / 100f;
-        float x1 = canvas.getWidth() / 2 + (float)(radius * Math.sin(radians));
-        float y1 = canvas.getWidth() / 2 - (float)(radius * Math.cos(radians));
-        canvas.drawLine(
-                canvas.getWidth() / 2f,
-                canvas.getWidth() / 2f,
-                x1,
-                y1,
-                hourHandPaint);
-    }
-
-    private void drawMinuteHand(Canvas canvas) {
-        double radians = (2 * Math.PI) * (minute / 60.0);
-        float radius = canvas.getWidth() * MINUTE_HAND_LENGTH_PERCENT / 100f;
-        float x1 = canvas.getWidth() / 2 + (float)(radius * Math.sin(radians));
-        float y1 = canvas.getWidth() / 2 - (float)(radius * Math.cos(radians));
-        canvas.drawLine(
-                canvas.getWidth() / 2f,
-                canvas.getWidth() / 2f,
-                x1,
-                y1,
-                minuteHandPaint);
+        minuteHand.draw(canvas);
+        hourHand.draw(canvas);
     }
 
     private void drawHourNumbers(Canvas canvas) {
