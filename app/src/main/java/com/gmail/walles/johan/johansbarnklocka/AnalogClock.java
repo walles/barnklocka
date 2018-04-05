@@ -7,13 +7,12 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.Calendar;
 
-public class AnalogClock extends View implements GestureDetector.OnGestureListener {
+public class AnalogClock extends View {
     private static final float CLOCK_RADIUS_PERCENT = 40;
     private static final float BORDER_WIDTH_PERCENT = 3;
     private final Paint borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -40,7 +39,6 @@ public class AnalogClock extends View implements GestureDetector.OnGestureListen
     private static final float MINUTE_HAND_WIDTH_PERCENT = 3;
     private final Hand minuteHand;
 
-    private final GestureDetector gestureDetector;
     private static final int SLOP_PERCENT = 4;
     private int slopPixels;
 
@@ -67,8 +65,6 @@ public class AnalogClock extends View implements GestureDetector.OnGestureListen
         minuteHandPaint.setStrokeCap(Paint.Cap.ROUND);
         minuteHand = new MinuteHand(minuteHandPaint, MINUTE_HAND_WIDTH_PERCENT, MINUTE_HAND_LENGTH_PERCENT);
         minuteHand.setTime(hour, minute);
-
-        gestureDetector = new GestureDetector(context, this);
     }
 
     @Override
@@ -111,7 +107,33 @@ public class AnalogClock extends View implements GestureDetector.OnGestureListen
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        return gestureDetector.onTouchEvent(event) || super.onTouchEvent(event);
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            return onScrollStart(event);
+        }
+
+        return super.onTouchEvent(event);
+    }
+
+    private boolean onScrollStart(MotionEvent e) {
+        assert movingHand == null;
+
+        double dMinute = minuteHand.getDistanceTo(e.getX(), e.getY());
+        double dHour = hourHand.getDistanceTo(e.getX(), e.getY());
+        Hand hand;
+        double distance;
+        if (dMinute < dHour) {
+            hand = minuteHand;
+            distance = dMinute;
+        } else {
+            hand = hourHand;
+            distance = dHour;
+        }
+
+        if (distance < slopPixels) {
+            movingHand = hand;
+            return true;
+        }
+        return false;
     }
 
     private void drawHourNumbers(Canvas canvas) {
@@ -175,62 +197,5 @@ public class AnalogClock extends View implements GestureDetector.OnGestureListen
                 canvas.getWidth() / 2,
                 canvas.getWidth() * CLOCK_RADIUS_PERCENT / 100f,
                 borderPaint);
-    }
-
-    @Override
-    public boolean onDown(MotionEvent e) {
-        return true;
-    }
-
-    @Override
-    public void onShowPress(MotionEvent e) {
-
-    }
-
-    @Override
-    public boolean onSingleTapUp(MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        if (e1 == e2) {
-            // This is a start event
-            return onScrollStart(e1);
-        }
-
-        return false;
-    }
-
-    private boolean onScrollStart(MotionEvent e1) {
-        assert movingHand == null;
-
-        double dMinute = minuteHand.getDistanceTo(e1.getX(), e1.getY());
-        double dHour = hourHand.getDistanceTo(e1.getX(), e1.getY());
-        Hand hand;
-        double distance;
-        if (dMinute < dHour) {
-            hand = minuteHand;
-            distance = dMinute;
-        } else {
-            hand = hourHand;
-            distance = dHour;
-        }
-
-        if (distance < slopPixels) {
-            movingHand = hand;
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public void onLongPress(MotionEvent e) {
-
-    }
-
-    @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        return false;
     }
 }
