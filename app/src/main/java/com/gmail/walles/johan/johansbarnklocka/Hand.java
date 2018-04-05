@@ -14,6 +14,9 @@ public abstract class Hand {
     private float handEndX;
     private float handEndY;
 
+    protected float centerX;
+    protected float centerY;
+
     protected Hand(Paint paint, float widthPercent, float lengthPercent) {
         this.paint = paint;
         this.widthPercent = widthPercent;
@@ -27,12 +30,9 @@ public abstract class Hand {
         handEndY = canvas.getWidth() / 2 - (float)(radius * Math.cos(radians));
 
         paint.setStrokeWidth(canvas.getWidth() * widthPercent / 100f);
-        canvas.drawLine(
-                canvas.getWidth() / 2f,
-                canvas.getWidth() / 2f,
-                handEndX,
-                handEndY,
-                paint);
+        centerX = canvas.getWidth() / 2f;
+        centerY = canvas.getWidth() / 2f;
+        canvas.drawLine(centerX, centerY, handEndX, handEndY, paint);
     }
 
     public void setTime(int hour, int minute) {
@@ -48,4 +48,14 @@ public abstract class Hand {
 
         return Math.sqrt(dx * dx + dy * dy);
     }
+
+    public int getHour() {
+        return hour;
+    }
+
+    public int getMinute() {
+        return minute;
+    }
+
+    public abstract void move(float x, float y);
 }

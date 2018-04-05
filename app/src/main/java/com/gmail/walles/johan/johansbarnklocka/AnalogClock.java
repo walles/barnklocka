@@ -108,17 +108,21 @@ public class AnalogClock extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            return onScrollStart(event);
+            return onHandMoveStart(event) || super.onTouchEvent(event);
+        }
+
+        if (event.getAction() == MotionEvent.ACTION_MOVE) {
+            return onHandMove(event) || super.onTouchEvent(event);
         }
 
         return super.onTouchEvent(event);
     }
 
-    private boolean onScrollStart(MotionEvent e) {
+    private boolean onHandMoveStart(MotionEvent event) {
         assert movingHand == null;
 
-        double dMinute = minuteHand.getDistanceTo(e.getX(), e.getY());
-        double dHour = hourHand.getDistanceTo(e.getX(), e.getY());
+        double dMinute = minuteHand.getDistanceTo(event.getX(), event.getY());
+        double dHour = hourHand.getDistanceTo(event.getX(), event.getY());
         Hand hand;
         double distance;
         if (dMinute < dHour) {
@@ -133,7 +137,24 @@ public class AnalogClock extends View {
             movingHand = hand;
             return true;
         }
+
         return false;
+    }
+
+    private boolean onHandMove(MotionEvent event) {
+        if (movingHand == null) {
+            return false;
+        }
+
+        movingHand.move(event.getX(), event.getY());
+        int hour = movingHand.getHour();
+        int minute = movingHand.getMinute();
+        hourHand.setTime(hour, minute);
+        minuteHand.setTime(hour, minute);
+
+        invalidate();
+
+        return true;
     }
 
     private void drawHourNumbers(Canvas canvas) {

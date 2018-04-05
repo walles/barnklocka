@@ -11,4 +11,9 @@ public class MinuteHand extends Hand {
     protected double getRadians() {
         return (2 * Math.PI) * (minute / 60.0);
     }
+
+    @Override
+    public void move(float x, float y) {
+        // FIXME: Code missing here!
+    }
 }
