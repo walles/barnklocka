@@ -8,7 +8,17 @@
     tools:context="com.gmail.walles.johan.johansbarnklocka.MainActivity">
 
     <com.gmail.walles.johan.johansbarnklocka.AnalogClock
+        android:id="@+id/analogClock"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/digitalClock"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/digitalClock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="HH:MM"
+        app:layout_constraintTop_toBottomOf="@+id/analogClock"/>
 
 </android.support.constraint.ConstraintLayout>
