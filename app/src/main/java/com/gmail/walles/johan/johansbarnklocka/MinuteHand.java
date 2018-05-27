@@ -25,7 +25,12 @@ public class MinuteHand extends Hand {
         double radians = Math.atan2(dx, -dy);
 
         // Update the time based on the new radians value
-        minute = (int)((radians / (2 * Math.PI)) * 60.0);
+        minute = (int)Math.floor((radians / (2 * Math.PI)) * 60.0);
+
+        // Minute is now -29 to 29, we want it to be 0-60
+        while (minute < 0) {
+            minute += 60;
+        }
 
         // FIXME: Handle change when moving the minute between 0 and 59
     }
