@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.Calendar;
@@ -38,6 +39,15 @@ public class AnalogClock extends View {
     private static final float MINUTE_HAND_WIDTH_PERCENT = 3;
     private final Hand minuteHand;
 
+    private static final int SLOP_PERCENT = 4;
+    private int slopPixels;
+
+    /**
+     * Which hand are we currently moving?
+     */
+    @Nullable
+    private Hand movingHand;
+
     public AnalogClock(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
@@ -58,6 +68,13 @@ public class AnalogClock extends View {
     }
 
     @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int width = MeasureSpec.getSize(widthMeasureSpec);
+        //noinspection SuspiciousNameCombination
+        setMeasuredDimension(width, width);
+    }
+
+    @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         borderPaint.setColor(Color.BLACK);
         borderPaint.setStyle(Paint.Style.STROKE);
@@ -74,6 +91,8 @@ public class AnalogClock extends View {
         hourNumberPaint.setColor(Color.BLACK);
         hourNumberPaint.setStyle(Paint.Style.STROKE);
         hourNumberPaint.setTextSize(w * HOUR_FONT_SIZE_PERCENT / 100f);
+
+        slopPixels = (w * SLOP_PERCENT) / 100;
     }
 
     @Override
@@ -91,6 +110,58 @@ public class AnalogClock extends View {
         drawHourNumbers(canvas);
         minuteHand.draw(canvas);
         hourHand.draw(canvas);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            return onHandMoveStart(event) || super.onTouchEvent(event);
+        }
+
+        if (event.getAction() == MotionEvent.ACTION_MOVE) {
+            return onHandMove(event) || super.onTouchEvent(event);
+        }
+
+        return super.onTouchEvent(event);
+    }
+
+    private boolean onHandMoveStart(MotionEvent event) {
+        assert movingHand == null;
+
+        double dMinute = minuteHand.getDistanceTo(event.getX(), event.getY());
+        double dHour = hourHand.getDistanceTo(event.getX(), event.getY());
+        Hand hand;
+        double distance;
+        if (dMinute < dHour) {
+            hand = minuteHand;
+            distance = dMinute;
+        } else {
+            hand = hourHand;
+            distance = dHour;
+        }
+
+        if (distance < slopPixels) {
+            movingHand = hand;
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean onHandMove(MotionEvent event) {
+        if (movingHand == null) {
+            return false;
+        }
+
+        movingHand.move(event.getX(), event.getY());
+        int hour = movingHand.getHour();
+        int minute = movingHand.getMinute();
+        hourHand.setTime(hour, minute);
+        minuteHand.setTime(hour, minute);
+
+        invalidate();
+
+        return true;
     }
 
     private void drawHourNumbers(Canvas canvas) {
