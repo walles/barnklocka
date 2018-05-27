@@ -42,6 +42,9 @@ public class AnalogClock extends View {
     private static final int SLOP_PERCENT = 4;
     private int slopPixels;
 
+    private int hour;
+    private int minute;
+
     /**
      * Which hand are we currently moving?
      */
@@ -51,8 +54,8 @@ public class AnalogClock extends View {
     public AnalogClock(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
-        int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-        int minute = Calendar.getInstance().get(Calendar.MINUTE);
+        hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        minute = Calendar.getInstance().get(Calendar.MINUTE);
 
         Paint hourHandPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         hourHandPaint.setColor(Color.BLACK);
@@ -154,8 +157,8 @@ public class AnalogClock extends View {
         }
 
         movingHand.move(event.getX(), event.getY());
-        int hour = movingHand.getHour();
-        int minute = movingHand.getMinute();
+        hour = movingHand.getHour();
+        minute = movingHand.getMinute();
         hourHand.setTime(hour, minute);
         minuteHand.setTime(hour, minute);
 
@@ -225,5 +228,16 @@ public class AnalogClock extends View {
                 canvas.getWidth() / 2,
                 canvas.getWidth() * CLOCK_RADIUS_PERCENT / 100f,
                 borderPaint);
+    }
+
+    /**
+     * @return 0-23
+     */
+    public int getHour() {
+        return hour;
+    }
+
+    public int getMinute() {
+        return minute;
     }
 }
