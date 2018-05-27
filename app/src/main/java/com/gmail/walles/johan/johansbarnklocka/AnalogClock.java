@@ -45,6 +45,12 @@ public class AnalogClock extends View {
     private int hour;
     private int minute;
 
+    public interface OnTimeChanged {
+        void onTimeChanged(int newHour, int newMinute);
+    }
+    @Nullable
+    private OnTimeChanged onTimeChanged;
+
     /**
      * Which hand are we currently moving?
      */
@@ -167,7 +173,15 @@ public class AnalogClock extends View {
 
         invalidate();
 
+        if (onTimeChanged != null) {
+            onTimeChanged.onTimeChanged(hour, minute);
+        }
+
         return true;
+    }
+
+    public void setOnTimeChanged(@Nullable OnTimeChanged onTimeChanged) {
+        this.onTimeChanged = onTimeChanged;
     }
 
     private void drawHourNumbers(Canvas canvas) {
