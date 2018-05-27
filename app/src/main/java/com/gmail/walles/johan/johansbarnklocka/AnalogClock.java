@@ -54,8 +54,11 @@ public class AnalogClock extends View {
     public AnalogClock(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
-        hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-        minute = Calendar.getInstance().get(Calendar.MINUTE);
+        // If the time is wrong when debugging this, check the time of your simulator, we should be
+        // showing the same thing.
+        Calendar calendar = Calendar.getInstance();
+        hour = calendar.get(Calendar.HOUR_OF_DAY);
+        minute = calendar.get(Calendar.MINUTE);
 
         Paint hourHandPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         hourHandPaint.setColor(Color.BLACK);

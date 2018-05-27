@@ -1,7 +1,6 @@
 A clock app for helping children learn analog and digital time.
 
 # TODO
-* Get the time zone right when setting initial time
 * Update digital clock when our hands move
 * Make digital clock bigger
 * Handle hour change when moving the minute hand
