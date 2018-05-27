@@ -1,6 +1,7 @@
 package com.gmail.walles.johan.johansbarnklocka;
 
 import android.graphics.Paint;
+import android.support.annotation.VisibleForTesting;
 
 public class HourHand extends Hand {
     public HourHand(Paint paint, float widthPercent, float lengthPercent) {
@@ -33,7 +34,8 @@ public class HourHand extends Hand {
         setHour(decimalHours);
     }
 
-    private void setHour(double decimalHours) {
+    @VisibleForTesting
+    void setHour(double decimalHours) {
         // From: https://stackoverflow.com/a/343602/473672
         double fractionalPart = decimalHours % 1;
         int newHour = (int)(decimalHours - fractionalPart);
