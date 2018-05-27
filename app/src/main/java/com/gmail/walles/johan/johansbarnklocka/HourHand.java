@@ -30,12 +30,15 @@ public class HourHand extends Hand {
         if (decimalHours < 0) {
             decimalHours += 12;
         }
+        setHour(decimalHours);
+    }
 
+    private void setHour(double decimalHours) {
         // From: https://stackoverflow.com/a/343602/473672
         double fractionalPart = decimalHours % 1;
-        double integralPart = decimalHours - fractionalPart;
+        int newHour = (int)(decimalHours - fractionalPart);
 
-        hour = (int)integralPart;
+        hour = newHour;
         minute = (int)(fractionalPart * 60);
     }
 }

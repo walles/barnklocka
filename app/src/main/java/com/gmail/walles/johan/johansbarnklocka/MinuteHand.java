@@ -27,12 +27,15 @@ public class MinuteHand extends Hand {
         // Update the time based on the new radians value
         int newMinute = (int)Math.floor((radians / (2 * Math.PI)) * 60.0);
 
-        // Minute is now -29 to 29, we want it to be 0-60
+        // Minute is now -30 to 29, we want it to be 0-59
         while (newMinute < 0) {
             newMinute += 60;
         }
+        setMinute(newMinute);
+    }
 
-        // FIXME: Handle change when moving the minute between 0 and 59
+    private void setMinute(int newMinute) {
+        // Handle change when moving the minute between 0 and 59
         if (minute > 45 && newMinute < 15) {
             hour++;
         } else if (minute < 15 && newMinute > 45) {
