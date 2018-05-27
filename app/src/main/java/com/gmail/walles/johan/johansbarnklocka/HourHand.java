@@ -25,8 +25,11 @@ public class HourHand extends Hand {
         float dy = y - centerY;
         double radians = Math.atan2(dx, -dy);
 
-        // FIXME: Update the time based on the new radians value
+        // Update the time based on the new radians value
         double decimalHours = (radians / (2 * Math.PI)) * 12.0;
+        if (decimalHours < 0) {
+            decimalHours += 12;
+        }
 
         // From: https://stackoverflow.com/a/343602/473672
         double fractionalPart = decimalHours % 1;
