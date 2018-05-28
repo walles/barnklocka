@@ -22,4 +22,24 @@ public class HourHandTest {
     public void testSetHourAfternoon() {
         testSetHour(15, 4, 16);
     }
+
+    @Test
+    public void testSetHourMidnightForward() {
+        testSetHour(23, 1, 1);
+    }
+
+    @Test
+    public void testSetHourMidnightBackward() {
+        testSetHour(1, 11, 23);
+    }
+
+    @Test
+    public void testSetHourNoonForward() {
+        testSetHour(11, 1, 13);
+    }
+
+    @Test
+    public void testSetHourNoonBackward() {
+        testSetHour(13, 11, 11);
+    }
 }
