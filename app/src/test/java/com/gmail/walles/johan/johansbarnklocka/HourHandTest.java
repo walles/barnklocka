@@ -6,11 +6,20 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class HourHandTest {
+    private void testSetHour(int startHour, int setHour, int correctResult) {
+        HourHand testMe = new HourHand(null, 0, 0);
+        testMe.setTime(startHour, 0);
+        testMe.setHour(setHour);
+        Assert.assertThat(testMe.getHour(), is(correctResult));
+    }
+
     @Test
     public void testSetHourEasy() {
-        HourHand testMe = new HourHand(null, 0, 0);
-        testMe.setTime(6, 0);
-        testMe.setHour(5.0);
-        Assert.assertThat(testMe.getHour(), is(5));
+        testSetHour(6, 5, 5);
+    }
+
+    @Test
+    public void testSetHourAfternoon() {
+        testSetHour(15, 4, 16);
     }
 }
