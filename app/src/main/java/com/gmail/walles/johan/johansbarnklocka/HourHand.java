@@ -38,9 +38,24 @@ public class HourHand extends Hand {
     void setHour(double decimalHours) {
         // From: https://stackoverflow.com/a/343602/473672
         double fractionalPart = decimalHours % 1;
-        int newHour = (int)(decimalHours - fractionalPart);
 
-        hour = newHour;
+        int newHourAm = (int)(decimalHours - fractionalPart);
+        int newHourPm = newHourAm + 12;
+        int amDiff = Math.abs(hour - newHourAm);
+        int pmDiff = Math.abs(hour - newHourPm);
+
+        if (hour >= 21 && newHourAm <=3) {
+            // Wrap from evening to morning
+            hour = newHourAm;
+        } else if (hour <= 3 && newHourPm >= 21) {
+            // Wrap from morning to evening
+            hour = newHourPm;
+        } else if (amDiff < pmDiff) {
+            hour = newHourAm;
+        } else {
+            hour = newHourPm;
+        }
+
         minute = (int)(fractionalPart * 60);
     }
 }
