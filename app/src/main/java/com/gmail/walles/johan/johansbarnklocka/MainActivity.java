@@ -8,6 +8,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private AnalogClock analogClock;
+    private TimeReadout timeReadout = new TimeReadout();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,16 +19,19 @@ public class MainActivity extends AppCompatActivity {
         analogClock.setOnTimeChanged(new AnalogClock.OnTimeChanged() {
             @Override
             public void onTimeChanged(int newHour, int newMinute) {
-                setDigitalTime(newHour, newMinute);
+                setTime(newHour, newMinute);
             }
         });
-        setDigitalTime(analogClock.getHour(), analogClock.getMinute());
+        setTime(analogClock.getHour(), analogClock.getMinute());
     }
 
-    private void setDigitalTime(int hour, int minute) {
+    private void setTime(int hour, int minute) {
         final TextView digitalClock = findViewById(R.id.digitalClock);
         digitalClock.setText(
                 String.format(Locale.getDefault(),
                         "%02d:%02d", analogClock.getHour(), analogClock.getMinute()));
+
+        final TextView analogReadout = findViewById(R.id.analogReadout);
+        analogReadout.setText(timeReadout.format(hour, minute));
     }
 }
