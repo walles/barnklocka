@@ -2,7 +2,7 @@ A clock app for helping children learn analog and digital time.
 
 # TODO
 * Show a plain-text readout of the digital clock
-* Read text using TTS when clicked
+* Speak digital readout text when clicked
 * Lock the app orientation to portrait
 
 ## DONE
@@ -15,3 +15,4 @@ A clock app for helping children learn analog and digital time.
 * Validate 24h time when moving the hour hand
 * Show a plain-text readout of the analog clock
 * Make digital clock look more like a digital clock
+* Speak analog readout text when clicked

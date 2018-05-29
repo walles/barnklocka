@@ -1,7 +1,11 @@
 package com.gmail.walles.johan.johansbarnklocka;
 
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Locale;
@@ -9,6 +13,9 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
     private AnalogClock analogClock;
     private final TimeReadout timeReadout = new TimeReadout();
+
+    @Nullable
+    private TextToSpeech tts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +30,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         setTime(analogClock.getHour(), analogClock.getMinute());
+
+        tts = new TextToSpeech(this, null);
+        final Button analogReadout = findViewById(R.id.analogReadout);
+        analogReadout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tts.speak(analogReadout.getText(), TextToSpeech.QUEUE_FLUSH, null, null);
+            }
+        });
     }
 
     private void setTime(int hour, int minute) {
@@ -31,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                 String.format(Locale.getDefault(),
                         "%02d:%02d", analogClock.getHour(), analogClock.getMinute()));
 
-        final TextView analogReadout = findViewById(R.id.analogReadout);
+        final Button analogReadout = findViewById(R.id.analogReadout);
         analogReadout.setText(timeReadout.format(hour, minute));
     }
 }
