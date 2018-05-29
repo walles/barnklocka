@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         analogReadout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tts.speak(analogReadout.getText(), TextToSpeech.QUEUE_FLUSH, null, null);
+                tts.speak(analogReadout.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
             }
         });
     }
