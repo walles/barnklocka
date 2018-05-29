@@ -31,8 +31,15 @@ public class MainActivity extends AppCompatActivity {
         });
         setTime(analogClock.getHour(), analogClock.getMinute());
 
-        tts = new TextToSpeech(this, null);
         final Button analogReadout = findViewById(R.id.analogReadout);
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    analogReadout.setEnabled(true);
+                }
+            }
+        });
         analogReadout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

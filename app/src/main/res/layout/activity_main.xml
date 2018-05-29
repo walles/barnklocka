@@ -21,6 +21,7 @@
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textSize="30sp"
+        android:enabled="false"
         app:layout_constraintTop_toBottomOf="@+id/analogClock"/>
 
     <TextView
