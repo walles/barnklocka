@@ -44,7 +44,7 @@ class TimeReadout {
             "Nio minuter över halv H1",
             "Tjugo i H1",
             "Nitton minuter i H1",
-            "Arton minute i H1",
+            "Arton minuter i H1",
             "Sjutton minuter i H1",
             "Sexton minuter i H1",
             "Kvart i H1",
