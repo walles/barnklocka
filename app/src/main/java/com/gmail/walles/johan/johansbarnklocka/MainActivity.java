@@ -8,7 +8,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private AnalogClock analogClock;
-    private TimeReadout timeReadout = new TimeReadout();
+    private final TimeReadout timeReadout = new TimeReadout();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
