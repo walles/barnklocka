@@ -48,6 +48,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (tts != null) {
+            tts.shutdown();
+        }
+    }
+
     private void setTime(int hour, int minute) {
         final TextView digitalClock = findViewById(R.id.digitalClock);
         digitalClock.setText(
