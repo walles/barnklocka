@@ -24,11 +24,12 @@
         android:enabled="false"
         app:layout_constraintTop_toBottomOf="@+id/analogClock"/>
 
-    <TextView
+    <Button
         android:id="@+id/digitalClock"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/black"
+        android:enabled="false"
         android:gravity="center_vertical|center_horizontal"
         android:text="HH:MM"
         android:textAlignment="gravity"
