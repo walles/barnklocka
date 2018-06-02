@@ -39,7 +39,7 @@ public class AnalogClock extends View {
     private static final float MINUTE_HAND_WIDTH_PERCENT = 3;
     private final Hand minuteHand;
 
-    private static final int SLOP_PERCENT = 4;
+    private static final int SLOP_PERCENT = 20;
     private int slopPixels;
 
     private int hour;
