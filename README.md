@@ -1,8 +1,6 @@
 A clock app for helping children learn analog and digital time.
 
 # TODO
-* Show a plain-text readout of the digital clock
-* Speak digital readout text when clicked
 
 ## DONE
 * Implement hour hand moving
@@ -16,3 +14,5 @@ A clock app for helping children learn analog and digital time.
 * Make digital clock look more like a digital clock
 * Speak analog readout text when clicked
 * Lock the app orientation to portrait
+* Show a plain-text readout of the digital clock
+* Speak digital readout text when clicked

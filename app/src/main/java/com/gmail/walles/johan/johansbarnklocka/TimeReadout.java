@@ -79,10 +79,81 @@ class TimeReadout {
             "elva",
     };
 
-    public String format(int hour, int minute) {
+    private static final String [] DIGITAL_NUMBER_NAME = new String[] {
+            "nollnoll",
+            "nollett",
+            "nolltvå",
+            "nolltre",
+            "nollfyra",
+            "nollfem",
+            "nollsex",
+            "nollsju",
+            "nollåtta",
+            "nollnio",
+            "tio",
+            "elva",
+            "tolv",
+            "tretton",
+            "fjorton",
+            "femton",
+            "sexton",
+            "sjutton",
+            "arton",
+            "nitton",
+            "tjugo",
+            "tjugoett",
+            "tjugotvå",
+            "tjugotre",
+            "tjugofyra",
+            "tjugofem",
+            "tjugosex",
+            "tjugosju",
+            "tjugoåtta",
+            "tjugonio",
+            "trettio",
+            "trettioett",
+            "trettiotvå",
+            "trettiotre",
+            "trettiofyra",
+            "trettiofem",
+            "trettiosex",
+            "trettiosju",
+            "trettioåtta",
+            "trettionio",
+            "fyrtio",
+            "fyrtioett",
+            "fyrtiotvå",
+            "fyrtiotre",
+            "fyrtiofyra",
+            "fyrtiofem",
+            "fyrtiosex",
+            "fyrtiosju",
+            "fyrtioåtta",
+            "fyrtionio",
+            "femtio",
+            "femtioett",
+            "femtiotvå",
+            "femtiotre",
+            "femtiofyra",
+            "femtiofem",
+            "femtiosex",
+            "femtiosju",
+            "femtioåtta",
+            "femtionio",
+    };
+
+    public String formatAnalog(int hour, int minute) {
         String h0 = HOUR_NAMES[hour % 12];
         String h1 = HOUR_NAMES[(hour + 1) % 12];
 
         return MINUTE_FORMATS[minute].replace("H0", h0).replace("H1", h1);
+    }
+
+    private String upcaseFirst(String string) {
+        return Character.toUpperCase(string.charAt(0)) + string.substring(1);
+    }
+
+    public String formatDigital(int hour, int minute) {
+        return upcaseFirst(DIGITAL_NUMBER_NAME[hour]) + " " + DIGITAL_NUMBER_NAME[minute];
     }
 }

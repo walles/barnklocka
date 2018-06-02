@@ -32,11 +32,13 @@ public class MainActivity extends AppCompatActivity {
         setTime(analogClock.getHour(), analogClock.getMinute());
 
         final Button analogReadout = findViewById(R.id.analogReadout);
+        final Button digitalReadout = findViewById(R.id.digitalReadout);
         tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
                 if (status == TextToSpeech.SUCCESS) {
                     analogReadout.setEnabled(true);
+                    digitalReadout.setEnabled(true);
                 }
             }
         });
@@ -44,6 +46,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 tts.speak(analogReadout.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
+            }
+        });
+        digitalReadout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tts.speak(digitalReadout.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
             }
         });
     }
@@ -64,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
                         "%02d:%02d", analogClock.getHour(), analogClock.getMinute()));
 
         final Button analogReadout = findViewById(R.id.analogReadout);
-        analogReadout.setText(timeReadout.format(hour, minute));
+        analogReadout.setText(timeReadout.formatAnalog(hour, minute));
+
+        final Button digitalReadout = findViewById(R.id.digitalReadout);
+        digitalReadout.setText(timeReadout.formatDigital(hour, minute));
     }
 }
