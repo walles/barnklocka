@@ -1,5 +1,6 @@
 package com.gmail.walles.johan.johansbarnklocka;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -124,6 +125,7 @@ public class AnalogClock extends View {
         hourHand.draw(canvas);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
