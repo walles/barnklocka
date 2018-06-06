@@ -1,8 +1,8 @@
 A clock app for helping children learn analog and digital time.
 
 # TODO
-* Make a "functional image"
 * Write a Privacy Policy (yes, I know)
+* Get screenshots
 * Release on Google Play, but only in Sweden
 * Make a round icon
 
@@ -22,3 +22,4 @@ A clock app for helping children learn analog and digital time.
 * Speak digital readout text when clicked
 * Only enable speech if a Swedish voice is available
 * Make an icon
+* Make a "Feature Graphic"
