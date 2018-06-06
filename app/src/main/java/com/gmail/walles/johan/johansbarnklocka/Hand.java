@@ -1,3 +1,7 @@
+/*
+ * Copyright 2018 johan.walles@gmail.com
+ */
+
 package com.gmail.walles.johan.johansbarnklocka;
 
 import android.graphics.Canvas;
