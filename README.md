@@ -1,7 +1,6 @@
 A clock app for helping children learn analog and digital time.
 
 # TODO
-* Only enable speech if a Swedish voice is available
 * Make an icon
 * Make a "functional image"
 * Write a Privacy Policy (yes, I know)
@@ -21,3 +20,4 @@ A clock app for helping children learn analog and digital time.
 * Lock the app orientation to portrait
 * Show a plain-text readout of the digital clock
 * Speak digital readout text when clicked
+* Only enable speech if a Swedish voice is available
