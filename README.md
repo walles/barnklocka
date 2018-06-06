@@ -1,7 +1,6 @@
 A clock app for helping children learn analog and digital time.
 
 # TODO
-* Get screenshots
 * Release on Google Play, but only in Sweden
 * Make a round icon
 
@@ -23,3 +22,4 @@ A clock app for helping children learn analog and digital time.
 * Make an icon
 * Make a "Feature Graphic"
 * Write a Privacy Policy (yes, I know)
+* Get screenshots
