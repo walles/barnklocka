@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -56,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
                 int setLanguageResult = tts.setLanguage(swedish);
                 if (setLanguageResult == TextToSpeech.LANG_MISSING_DATA || setLanguageResult == TextToSpeech.LANG_NOT_SUPPORTED) {
                     Log.w(TAG, "Swedish not available: " + setLanguageResult);
+                    Toast.makeText(getApplicationContext(),
+                            "Jag kan prata med dig om du fixar en svensk talsyntes!",
+                            Toast.LENGTH_LONG).show();
                     tts = null;
                     return;
                 }
