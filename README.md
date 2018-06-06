@@ -1,10 +1,10 @@
 A clock app for helping children learn analog and digital time.
 
 # TODO
-* Make an icon
 * Make a "functional image"
 * Write a Privacy Policy (yes, I know)
 * Release on Google Play, but only in Sweden
+* Make a round icon
 
 ## DONE
 * Implement hour hand moving
@@ -21,3 +21,4 @@ A clock app for helping children learn analog and digital time.
 * Show a plain-text readout of the digital clock
 * Speak digital readout text when clicked
 * Only enable speech if a Swedish voice is available
+* Make an icon
