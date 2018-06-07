@@ -2,6 +2,7 @@ A clock app for helping children learn analog and digital time.
 
 # TODO
 * Make a round launcher icon
+* Make sure layout works on both wider devices and higher (2:1) ones.
 
 ## DONE
 * Implement hour hand moving
