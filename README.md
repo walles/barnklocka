@@ -1,5 +1,12 @@
 A clock app for helping children learn analog and digital time.
 
+All in Swedish, if you're in Sweden you can [install it from Google
+Play](https://play.google.com/store/apps/details?id=com.gmail.walles.johan.johansbarnklocka).
+
+Here's what it looks like:
+
+<img src="gfx/screenshots/phone-1.png" width="216" height="384">
+
 # TODO
 * Make a round launcher icon
 * Make sure layout works on both wider devices and higher (2:1) ones.
