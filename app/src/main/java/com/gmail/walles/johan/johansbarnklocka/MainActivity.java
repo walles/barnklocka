@@ -142,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressWarnings("SameParameterValue")
     private void composeEmail(String recipient, String subject) {
         // From: https://developer.android.com/guide/components/intents-common#Email
         Intent intent = new Intent(Intent.ACTION_SENDTO);
