@@ -2,7 +2,6 @@ A clock app for helping children learn analog and digital time.
 
 # TODO
 * Make a round launcher icon
-* Add a link to the source code inside of the app
 
 ## DONE
 * Implement hour hand moving
@@ -24,3 +23,4 @@ A clock app for helping children learn analog and digital time.
 * Write a Privacy Policy (yes, I know)
 * Get screenshots
 * Release on Google Play, but only in Sweden
+* Add a link to the source code inside of the app

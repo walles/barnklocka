@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2018 johan.walles@gmail.com
+  -->
+
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/viewSource"
+        android:title="Visa källkod"/>
+    <item
+        android:id="@+id/contactDeveloper"
+        android:title="Kontakta Johan..."/>
+</menu>
