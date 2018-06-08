@@ -3,10 +3,11 @@
   ~ Copyright 2018 johan.walles@gmail.com
   -->
 
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.gmail.walles.johan.johansbarnklocka.MainActivity">
@@ -14,8 +15,8 @@
     <com.gmail.walles.johan.johansbarnklocka.AnalogClock
         android:id="@+id/analogClock"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
     <Button
         android:id="@+id/analogReadout"
@@ -25,8 +26,7 @@
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textSize="30sp"
-        android:enabled="false"
-        app:layout_constraintTop_toBottomOf="@+id/analogClock"/>
+        android:enabled="false"/>
 
     <Button
         android:id="@+id/digitalClock"
@@ -40,7 +40,7 @@
         android:textColor="@android:color/holo_green_light"
         android:textSize="40sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/digitalReadout"/>
+        android:layout_marginTop="8dp"/>
 
     <Button
         android:id="@+id/digitalReadout"
@@ -53,6 +53,6 @@
         android:textAllCaps="false"
         android:textColor="@android:color/holo_green_light"
         android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:layout_marginBottom="8dp"/>
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

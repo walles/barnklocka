@@ -27,15 +27,16 @@ public abstract class Hand {
         this.lengthPercent = lengthPercent;
     }
 
-    public void draw(Canvas canvas) {
+    public void draw(Canvas canvas, float width, float height) {
+        float diameter = Math.min(width, height);
         double radians = getRadians();
-        float radius = canvas.getWidth() * lengthPercent / 100f;
-        handEndX = canvas.getWidth() / 2 + (float)(radius * Math.sin(radians));
-        handEndY = canvas.getWidth() / 2 - (float)(radius * Math.cos(radians));
+        float radius = diameter * lengthPercent / 100f;
+        handEndX = width / 2 + (float)(radius * Math.sin(radians));
+        handEndY = height / 2 - (float)(radius * Math.cos(radians));
 
-        paint.setStrokeWidth(canvas.getWidth() * widthPercent / 100f);
-        centerX = canvas.getWidth() / 2f;
-        centerY = canvas.getWidth() / 2f;
+        paint.setStrokeWidth(diameter * widthPercent / 100f);
+        centerX = width / 2f;
+        centerY = height / 2f;
         canvas.drawLine(centerX, centerY, handEndX, handEndY, paint);
     }
 

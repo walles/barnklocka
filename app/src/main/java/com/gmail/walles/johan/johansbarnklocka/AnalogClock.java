@@ -44,6 +44,10 @@ public class AnalogClock extends View {
     private static final float MINUTE_HAND_WIDTH_PERCENT = 3;
     private final Hand minuteHand;
 
+    private float cx;
+    private float cy;
+    private int diameter;
+
     private static final int SLOP_PERCENT = 20;
     private int slopPixels;
 
@@ -85,31 +89,28 @@ public class AnalogClock extends View {
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int width = MeasureSpec.getSize(widthMeasureSpec);
-        //noinspection SuspiciousNameCombination
-        setMeasuredDimension(width, width);
-    }
-
-    @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        diameter = Math.min(w, h);
+        cx = w / 2f;
+        cy = h / 2f;
+
         borderPaint.setColor(Color.BLACK);
         borderPaint.setStyle(Paint.Style.STROKE);
-        borderPaint.setStrokeWidth(w * BORDER_WIDTH_PERCENT / 100f);
+        borderPaint.setStrokeWidth(diameter * BORDER_WIDTH_PERCENT / 100f);
 
         minuteTickPaint.setColor(Color.BLACK);
         minuteTickPaint.setStyle(Paint.Style.STROKE);
-        minuteTickPaint.setStrokeWidth(w * MINUTE_TICK_WIDTH_PERCENT / 100f);
+        minuteTickPaint.setStrokeWidth(diameter * MINUTE_TICK_WIDTH_PERCENT / 100f);
 
         hourTickPaint.setColor(Color.BLACK);
         hourTickPaint.setStyle(Paint.Style.STROKE);
-        hourTickPaint.setStrokeWidth(w * HOUR_TICK_WIDTH_PERCENT / 100f);
+        hourTickPaint.setStrokeWidth(diameter * HOUR_TICK_WIDTH_PERCENT / 100f);
 
         hourNumberPaint.setColor(Color.BLACK);
         hourNumberPaint.setStyle(Paint.Style.STROKE);
-        hourNumberPaint.setTextSize(w * HOUR_FONT_SIZE_PERCENT / 100f);
+        hourNumberPaint.setTextSize(diameter * HOUR_FONT_SIZE_PERCENT / 100f);
 
-        slopPixels = (w * SLOP_PERCENT) / 100;
+        slopPixels = (diameter * SLOP_PERCENT) / 100;
     }
 
     @Override
@@ -125,8 +126,9 @@ public class AnalogClock extends View {
         drawMinuteTicks(canvas);
         drawHourTicks(canvas);
         drawHourNumbers(canvas);
-        minuteHand.draw(canvas);
-        hourHand.draw(canvas);
+
+        minuteHand.draw(canvas, getWidth(), getHeight());
+        hourHand.draw(canvas, getWidth(), getHeight());
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -194,9 +196,9 @@ public class AnalogClock extends View {
         for (int i = 1; i <= 12; i++) {
             double radians = (2 * Math.PI) * (i / 12.0);
 
-            float radius = canvas.getWidth() * HOUR_NUMBER_RADIUS_PERCENT / 100f;
-            float x0 = canvas.getWidth() / 2 + (float)(radius * Math.sin(radians));
-            float y0 = canvas.getWidth() / 2 - (float)(radius * Math.cos(radians));
+            float radius = diameter * HOUR_NUMBER_RADIUS_PERCENT / 100f;
+            float x0 = cx + (float)(radius * Math.sin(radians));
+            float y0 = cy - (float)(radius * Math.cos(radians));
 
             String hourString = Integer.toString(i);
             Rect textBounds = new Rect();
@@ -213,15 +215,15 @@ public class AnalogClock extends View {
         for (int i = 1; i <= 12; i++) {
             double radians = (2 * Math.PI) * (i / 12.0);
 
-            float inner_radius = canvas.getWidth() * (HOUR_TICK_RADIUS_PERCENT
+            float inner_radius = diameter * (HOUR_TICK_RADIUS_PERCENT
                     - HOUR_TICK_LENGTH_PERCENT / 2f) / 100f;
-            float x0 = canvas.getWidth() / 2 + (float)(inner_radius * Math.sin(radians));
-            float y0 = canvas.getWidth() / 2 - (float)(inner_radius * Math.cos(radians));
+            float x0 = cx + (float)(inner_radius * Math.sin(radians));
+            float y0 = cy - (float)(inner_radius * Math.cos(radians));
 
-            float outer_radius = canvas.getWidth() * (HOUR_TICK_RADIUS_PERCENT
+            float outer_radius = diameter * (HOUR_TICK_RADIUS_PERCENT
                     + HOUR_TICK_LENGTH_PERCENT / 2f) / 100f;
-            float x1 = canvas.getWidth() / 2 + (float)(outer_radius * Math.sin(radians));
-            float y1 = canvas.getWidth() / 2 - (float)(outer_radius * Math.cos(radians));
+            float x1 = cx + (float)(outer_radius * Math.sin(radians));
+            float y1 = cy - (float)(outer_radius * Math.cos(radians));
 
             canvas.drawLine(x0, y0, x1, y1, hourTickPaint);
         }
@@ -231,15 +233,15 @@ public class AnalogClock extends View {
         for (int i = 0; i <= 59; i++) {
             double radians = (2 * Math.PI) * (i / 60.0);
 
-            float inner_radius = canvas.getWidth() * (MINUTE_TICK_RADIUS_PERCENT
+            float inner_radius = diameter * (MINUTE_TICK_RADIUS_PERCENT
                     - MINUTE_TICK_LENGTH_PERCENT / 2f) / 100f;
-            float x0 = canvas.getWidth() / 2 + (float)(inner_radius * Math.sin(radians));
-            float y0 = canvas.getWidth() / 2 - (float)(inner_radius * Math.cos(radians));
+            float x0 = cx + (float)(inner_radius * Math.sin(radians));
+            float y0 = cy - (float)(inner_radius * Math.cos(radians));
 
-            float outer_radius = canvas.getWidth() * (MINUTE_TICK_RADIUS_PERCENT
+            float outer_radius = diameter * (MINUTE_TICK_RADIUS_PERCENT
                     + MINUTE_TICK_LENGTH_PERCENT / 2f) / 100f;
-            float x1 = canvas.getWidth() / 2 + (float)(outer_radius * Math.sin(radians));
-            float y1 = canvas.getWidth() / 2 - (float)(outer_radius * Math.cos(radians));
+            float x1 = cx + (float)(outer_radius * Math.sin(radians));
+            float y1 = cy - (float)(outer_radius * Math.cos(radians));
 
             canvas.drawLine(x0, y0, x1, y1, minuteTickPaint);
         }
@@ -247,9 +249,8 @@ public class AnalogClock extends View {
 
     private void drawBorder(Canvas canvas) {
         canvas.drawCircle(
-                canvas.getWidth() / 2,
-                canvas.getWidth() / 2,
-                canvas.getWidth() * CLOCK_RADIUS_PERCENT / 100f,
+                cx, cy,
+                diameter * CLOCK_RADIUS_PERCENT / 100f,
                 borderPaint);
     }
 

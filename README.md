@@ -9,7 +9,6 @@ Here's what it looks like:
 
 # TODO
 * Make a round launcher icon
-* Make sure layout works on both wider devices and higher (2:1) ones.
 
 ## DONE
 * Implement hour hand moving
@@ -32,3 +31,4 @@ Here's what it looks like:
 * Get screenshots
 * Release on Google Play, but only in Sweden
 * Add a link to the source code inside of the app
+* Make sure layout works on both wider devices and higher (2:1) ones.
