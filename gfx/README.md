@@ -1,14 +1,13 @@
-# Icon
-`icon.png` is done in [Gimp](https://www.gimp.org/downloads/) based
-on `icon.xcf`.
+# Icon and Logo Files
+File 'icon.png and other .png files is done in [Inkscape](https://inkscape.org/da/release/0.92.3/) based
+on `master.svg`.
 
-`icon.xcf` is a composition of the following two images:
-* <https://openclipart.org/detail/299275/simple-alarm-clock>
-* <https://pixabay.com/en/pointer-pointing-index-finger-hand-152868/#>
+'master.svg' is a vector-based file and you can find other vector files on the drive:
+https://drive.google.com/open?id=1i58wYHbpNPi6YoVPiAbz-z2rDZexqiqi
 
 # Feature Graphic
 The [Feature Graphic](https://support.google.com/googleplay/android-developer/answer/1078870)
 is done using the following font:
-* <http://www.fontspace.com/heaven-castro/a-childish-wonders>
+* <https://files.fluxes.com/wp-content/uploads/2017/08/riffic.zip>
 
-Edit `feature-graphic.xcf` in Gimp, export into `feature-graphic.png`.
+Edit `feature-graphic.svg` in Inkscape, export into `feature-graphic.png`.
