@@ -1,5 +1,5 @@
 <h1 align=center>
-<img src="gfx/Logotype Secondary/color.png" width=70%>
+<img src="gfx/Logotype Primary/color.png" width=70%>
 </h1>
 
 A clock app for helping children learn analog and digital time.
