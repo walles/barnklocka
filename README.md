@@ -7,6 +7,14 @@ Here's what it looks like:
 
 <img src="gfx/screenshots/phone-1.png" width="216" height="384">
 
+# Releasing a new Version
+* Update `VersionName` and `VersionCode` in `/AndroidManifest.xml`
+* Commit this change
+* `git tag <new version name>`, do `git tag` for inspiration
+* In Android Studio, do *Build* / *Generate Signed APK...*
+* Upload the new APK to [Google
+Play](https://play.google.com/apps/publish)
+
 # TODO
 * Make a round launcher icon
 
