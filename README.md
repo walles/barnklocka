@@ -8,7 +8,7 @@ Here's what it looks like:
 <img src="gfx/screenshots/phone-1.png" width="216" height="384">
 
 # Releasing a new Version
-* Update `VersionName` and `VersionCode` in `/AndroidManifest.xml`
+* Update `VersionName` and `VersionCode` in `/app/build.gradle`
 * Commit this change
 * `git push`
 * `git tag <new version name>`, do `git tag` for inspiration
