@@ -1,3 +1,7 @@
+<h1 align=center>
+<img src="gfx/Logotype Primary/color.png" width=70%>
+</h1>
+
 A clock app for helping children learn analog and digital time.
 
 All in Swedish, if you're in Sweden you can [install it from Google
