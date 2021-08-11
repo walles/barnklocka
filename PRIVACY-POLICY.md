@@ -1,5 +1,11 @@
-Johans barnklocka shows the time, allows you to set the time by turning the hands, and if you have a Swedish TTS installed it can read you the time.
+Johans barnklocka does not collect any data.
 
-Something it does *not* do is collect data about its users in any way, not even in local storage on your device.
+It does not store any data.
 
-Once you leave the app is gone. That's it.
+It does not send any data anywhere.
+
+It is just a talking clock where you can adjust the hands.
+
+Any questions can be answered by johan.walles@gmail.com.
+
+This text last updated on 2021-08-11.
