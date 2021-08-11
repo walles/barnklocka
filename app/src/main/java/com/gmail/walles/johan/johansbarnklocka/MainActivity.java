@@ -9,18 +9,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.Locale;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Barnklocka";
@@ -37,48 +37,40 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         analogClock = findViewById(R.id.analogClock);
-        analogClock.setOnTimeChanged(new AnalogClock.OnTimeChanged() {
-            @Override
-            public void onTimeChanged(int newHour, int newMinute) {
-                setTime(newHour, newMinute);
-            }
-        });
+        analogClock.setOnTimeChanged(this::setTime);
         setTime(analogClock.getHour(), analogClock.getMinute());
 
         final Button analogReadout = findViewById(R.id.analogReadout);
         final Button digitalClock = findViewById(R.id.digitalClock);
         final Button digitalReadout = findViewById(R.id.digitalReadout);
-        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if (status != TextToSpeech.SUCCESS) {
-                    Log.e(TAG, "Text-to-speech initialization failed: " + status);
-                    tts = null;
-                    return;
-                }
-
-                if (tts == null) {
-                    Log.e(TAG, "TTS is null while setting up, giving up");
-                    return;
-                }
-
-                Locale swedish = new Locale("swe");
-                int setLanguageResult = tts.setLanguage(swedish);
-                if (setLanguageResult == TextToSpeech.LANG_MISSING_DATA || setLanguageResult == TextToSpeech.LANG_NOT_SUPPORTED) {
-                    Log.w(TAG, "Swedish not available: " + setLanguageResult);
-                    Toast.makeText(getApplicationContext(),
-                            "Jag kan prata med dig om du fixar en svensk talsyntes!",
-                            Toast.LENGTH_LONG).show();
-                    tts = null;
-                    return;
-                }
-
-                Log.i(TAG, "Swedish TTS set up, enabling buttons");
-
-                analogReadout.setEnabled(true);
-                digitalClock.setEnabled(true);
-                digitalReadout.setEnabled(true);
+        tts = new TextToSpeech(this, status -> {
+            if (status != TextToSpeech.SUCCESS) {
+                Log.e(TAG, "Text-to-speech initialization failed: " + status);
+                tts = null;
+                return;
             }
+
+            if (tts == null) {
+                Log.e(TAG, "TTS is null while setting up, giving up");
+                return;
+            }
+
+            Locale swedish = new Locale("swe");
+            int setLanguageResult = tts.setLanguage(swedish);
+            if (setLanguageResult == TextToSpeech.LANG_MISSING_DATA || setLanguageResult == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.w(TAG, "Swedish not available: " + setLanguageResult);
+                Toast.makeText(getApplicationContext(),
+                        "Jag kan prata med dig om du fixar en svensk talsyntes!",
+                        Toast.LENGTH_LONG).show();
+                tts = null;
+                return;
+            }
+
+            Log.i(TAG, "Swedish TTS set up, enabling buttons");
+
+            analogReadout.setEnabled(true);
+            digitalClock.setEnabled(true);
+            digitalReadout.setEnabled(true);
         });
         tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
             @Override
@@ -96,25 +88,12 @@ public class MainActivity extends AppCompatActivity {
                 Log.w(TAG, "Speech failed: " + utteranceId);
             }
         });
-        analogReadout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                speak(analogReadout.getText());
-            }
+        analogReadout.setOnClickListener(v -> speak(analogReadout.getText()));
+        digitalClock.setOnClickListener(v -> {
+            // Speak the digital readout text
+            speak(digitalReadout.getText());
         });
-        digitalClock.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Speak the digital readout text
-                speak(digitalReadout.getText());
-            }
-        });
-        digitalReadout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                speak(digitalReadout.getText());
-            }
-        });
+        digitalReadout.setOnClickListener(v -> speak(digitalReadout.getText()));
     }
 
     @Override
