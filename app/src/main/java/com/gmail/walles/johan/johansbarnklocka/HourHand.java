@@ -5,7 +5,7 @@
 package com.gmail.walles.johan.johansbarnklocka;
 
 import android.graphics.Paint;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.VisibleForTesting;
 
 public class HourHand extends Hand {
     public HourHand(Paint paint, float widthPercent, float lengthPercent) {
