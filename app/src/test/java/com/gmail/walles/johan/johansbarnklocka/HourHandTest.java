@@ -11,7 +11,6 @@ import org.junit.Test;
 
 public class HourHandTest {
     private void testSetHour(int startHour, int setHour, int correctResult) {
-        //noinspection ConstantConditions
         HourHand testMe = new HourHand(null, 0, 0);
         testMe.setTime(startHour, 0);
         testMe.setHour(setHour);
