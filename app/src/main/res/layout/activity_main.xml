@@ -25,7 +25,7 @@
         android:textAllCaps="false"
         android:textSize="30sp"
         android:lines="2"
-        android:gravity="top"
+        android:gravity="center_horizontal"
         android:enabled="false"
         tools:ignore="HardcodedText" />
 
