@@ -105,20 +105,20 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.viewSource:
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(
-                        "https://github.com/walles/barnklocka?files=1"));
-                startActivity(browserIntent);
-                return true;
-
-            case R.id.contactDeveloper:
-                composeEmail("johan.walles@gmail.com", "Johans barnklocka");
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+        if (itemId == R.id.viewSource) {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(
+                    "https://github.com/walles/barnklocka?files=1"));
+            startActivity(browserIntent);
+            return true;
         }
+
+        if (itemId == R.id.contactDeveloper) {
+            composeEmail("johan.walles@gmail.com", "Johans barnklocka");
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("SameParameterValue")
